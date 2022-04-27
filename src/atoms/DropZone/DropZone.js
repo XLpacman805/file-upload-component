@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from 'prop-types';
 import { Zone } from "./DropZone.style";
 
 const DropZone = (props) => {
     const { testId } = props;
-    const handleFiles = (files) => console.log(files);
+    const [fileList, setFileList] = useState(new DataTransfer().files);
+    const inputRef = useRef();
+
+    const handleFiles = (files) => setFileList(files);
     const onDrop = (e) => {
         e.stopPropagation();
         e.preventDefault();
@@ -17,10 +20,15 @@ const DropZone = (props) => {
         onDragOver: (e) => { e.stopPropagation(); e.preventDefault(); },
         onDrop: onDrop,
     };
+    useEffect(() => {
+        inputRef.current.files = fileList;
+    }, [fileList]);
 
     return (
         <Zone {...zoneHandlers} data-testid={testId}>
-            Drag and Drop your Files
+            <p>Drag and Drop your Files</p>
+            <p> or </p>
+            <input onChange={e => handleFiles(e.target.files)} ref={inputRef} type="file" multiple />
         </Zone>
     );
 };

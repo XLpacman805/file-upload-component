@@ -8,7 +8,7 @@ const Zone = styled.div`
     background: ${primaryColor(0.1)};
     border: 1px dashed ${primaryColor(1)};
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     justify-content: center;
     align-items: center;
 `;
